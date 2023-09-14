@@ -62,7 +62,6 @@ if( class_exists( 'CSF' ) ) {
                         'type' => 'text',
                         'title' => 'Title',
                     ],
-
                     [
                         'id' => 'latitude',
                         'type' => 'text',
@@ -74,24 +73,31 @@ if( class_exists( 'CSF' ) ) {
                         'title' => 'Longitude',
                     ],
                     [
-                        'id' => 'address',
-                        'type' => 'text',
-                        'title' => 'Address',
-                    ],
-                    [
-                        'id' => 'phone',
-                        'type' => 'text',
-                        'title' => 'Phone',
-                    ],
-                    [
-                        'id' => 'hours',
-                        'type' => 'text',
-                        'title' => 'Hours',
-                    ],
-                    [
-                        'id' => 'website',
-                        'type' => 'text',
-                        'title' => 'Website',
+                        'id' => 'icon_list',
+                        'type' => 'group',
+                        'title' => 'Icon list',
+                        'fields' => [
+                            [
+                                'id' => 'title',
+                                'type' => 'text',
+                                'title' => 'Title',
+                            ],
+                            [
+                                'id' => 'text',
+                                'type' => 'text',
+                                'title' => 'Text',
+                            ],
+                            [
+                                'id' => 'icon',
+                                'type' => 'icon',
+                                'title' => 'Icon',
+                            ],
+                            [
+                                'id' => 'link',
+                                'type' => 'link',
+                                'title' => 'Link',
+                            ],
+                        ]
                     ],
                 ]
             ]

@@ -1,0 +1,15 @@
+.gff-store-locator-content {
+    padding: 10px;
+    font-size: 16px;
+    max-width: 350px;
+    line-height: 1.6;
+}
+
+.gff-store-locator-info a {
+    color: #1567ae;
+    text-decoration: none;
+}
+
+.gff-store-locator-content p {
+    margin-bottom: 10px;
+}

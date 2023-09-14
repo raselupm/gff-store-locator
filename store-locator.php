@@ -34,8 +34,15 @@ require_once plugin_dir_path( __FILE__ ) . 'inc/custom-posts.php';
 // shortcodes
 require_once plugin_dir_path( __FILE__ ) . 'inc/shortcodes.php';
 
+// elementor
+require_once plugin_dir_path( __FILE__ ) . 'inc/elementor.php';
+
 // include css and js from assets folder
 function gff_store_locator_assets() {
+    // css
+    wp_enqueue_style( 'gff-store-locator', plugin_dir_url( __FILE__ ) . 'assets/css/gff-store-locator.css', null, '1.0.0' );
+    
+    // js
     wp_enqueue_style( 'leaflet', plugin_dir_url( __FILE__ ) . 'libs/leaflet-js/leaflet.css', null, '1.0.0' );
     wp_enqueue_script( 'leaflet', plugin_dir_url( __FILE__ ) . 'libs/leaflet-js/leaflet.js', [], '1.0.0', false );
 }

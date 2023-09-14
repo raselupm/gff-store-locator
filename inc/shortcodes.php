@@ -25,30 +25,45 @@ function gff_store_locator_map_shortcode($atts) {
             $cs_options = get_option('gff_store_locator_options');
             $html .= '<script src="https://maps.googleapis.com/maps/api/js?key='.$cs_options['api_key'].'&callback=initMap" async defer></script>
             <script >
-                var map;
-                var InforObj = [];
-
-
-                var markersOnMap = [';
+                let map;
+                let InforObj = [];
+                let markersOnMap = [';
 
                 foreach($maps as $map) {
+
+
+
+
                     $html .='{
                         placeName: "'.$map['title'].'",
-                        address: "'.$map['address'].'",
-                        phone: "'.$map['phone'].'",
-                        hours: "'.$map['hours'].'",
-                        website: "'.$map['website'].'",
                         LatLng: [
                             {
                                 lat: '.$map['latitude'].',
                                 lng: '.$map['longitude'].'
                             }
-                        ]
+                        ],
+                        infos: [';
+
+                        foreach($map['icon_list'] as $info) {
+                            $html .= '{
+                                title: "'.$info['title'].'",
+                                text: "'.$info['text'].'",
+                                icon: "'.$info['icon'].'",
+                                link: "'.$info['link']['url'].'",
+                            },';
+                        }
+
+
+                        $html .= '
+                        ],
                     },';
                 }
 
 
             $html .='];
+            
+                console.log(markersOnMap);
+                
                 window.onload = function() {
                     initMap();
                 };
@@ -70,17 +85,38 @@ function gff_store_locator_map_shortcode($atts) {
                     for (var i = 0; i < markersOnMap.length; i++) {
                         /* A. Create html data for the markers */
                         var contentString =
-                        \'<div id="content"><h2>\' +
+                        \'<div class="gff-store-locator-content"><h2>\' +
                         markersOnMap[i].placeName +
-                        "</h2><p>Address: <a target=\'_blank\' href=\'https://www.google.com/maps/search/" + markersOnMap[i].address + "\'>" +
-                        markersOnMap[i].address +
-                        "</a></p><p>Service Phone: <a href=\'tel:" + markersOnMap[i].phone + "\'>" +
-                        markersOnMap[i].phone +
-                        "</a></p><p>General Hours: " +
-                        markersOnMap[i].hours +
-                        "</p><p>Website: <a target=\'_blank\' href=\'" + markersOnMap[i].website + "\'>" +
-                        markersOnMap[i].website +
-                        "</p></div>";
+                        "</h2>" + 
+                        
+                        // foreach loop for infos
+                        "<div class=\'gff-store-locator-info\'>" +
+                        markersOnMap[i].infos.map(function(info) {
+                            let infoMarkup = "<p>";
+                            
+                            if(info.link) {
+                                infoMarkup += "<a target=\'_blank\' href=\'" + info.link + "\'>";
+                            }
+                            
+                            if(info.icon) {
+                                infoMarkup += "<i class=\'" + info.icon + "\'></i> ";
+                            }
+                            
+                            if(info.title) {
+                                infoMarkup += "<strong>" + info.title + "</strong> ";
+                            }
+                            
+                            infoMarkup += info.text;
+                            
+                            if(info.link) {
+                                infoMarkup += "</a>";
+                            }
+                            
+                            infoMarkup += "</p>";
+                            
+                            return infoMarkup;
+                        }).join("") +
+                        "</div></div>";
                     
                         /* B. generate markers position and label */
                         const marker = new google.maps.Marker({
